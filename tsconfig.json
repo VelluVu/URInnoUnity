@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+        "experimentalDecorators": true,
+        "target": "ES5",
+        "module": "system",
+        "allowJs" : false,
+        "declaration": true,
+        "inlineSources": false,
+        "inlineSourceMap": false,
+        "outFile": "C:/Users/Veli-Matti/Desktop/URInnoUnity/URInnoUnity/Export/debug/URInnoUnity.js"
+    },
+    "include": [
+        "assets/**/*"
+    ]    
+}
