@@ -22,27 +22,45 @@ var PROJECT;
             if (propertyBag === void 0) { propertyBag = {}; }
             var _this = _super.call(this, owner, scene, tick, propertyBag) || this;
             _this.raycastLength = 0;
+            _this.fired = false;
+            _this.fireRate = 0.1;
+            _this.fireDelay = 0.0;
             return _this;
         }
         RaycastForward.prototype.ready = function () {
-            // Scene execute when ready
-            this.raycastLength = this.getProperty("raycastLength");
+            // Scene execute when ready         
         };
         RaycastForward.prototype.start = function () {
             var _this = this;
             // Start component function
+            this.raycastLength = this.getProperty("raycastLength");
+            this.fired = this.getProperty("fired");
+            this.fireRate = this.getProperty("fireRate");
             this.manager.webvr.onControllerMeshLoadedObservable.add(function (eventData, eventState) {
                 eventData.onTriggerStateChangedObservable.add(function (buttonData, buttonState) {
-                    if (buttonData.pressed && buttonData.value == 1) {
+                    if (buttonData.pressed && buttonData.value >= 0.9 && !_this.fired) {
+                        _this.fired = true;
                         console.log("Pressed Button " + _this.raycastLength);
                         var ray = eventData.getForwardRay(_this.raycastLength);
                         BABYLON.RayHelper.CreateAndShow(ray, _this.scene, BABYLON.Color3.Purple());
+                    }
+                    else {
+                        _this.fired = false;
                     }
                 });
             });
         };
         RaycastForward.prototype.update = function () {
             // Update render loop function
+            /*if(this.fired)
+            {
+                this.fireDelay += this.manager.deltaTime;
+                if(this.fireDelay > this.fireRate)
+                {
+                    this.fireDelay = 0;
+                    this.fired = false;
+                }
+            }*/
         };
         RaycastForward.prototype.after = function () {
             // After render loop function
